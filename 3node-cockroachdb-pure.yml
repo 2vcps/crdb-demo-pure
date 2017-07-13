@@ -1,7 +1,7 @@
 version: '3.1'
 services:
     db1:
-      image: cockroachdb/cockroach:v1.0.3
+      image: cockroachdb/cockroach:v1.0.2
       deploy:
             mode: replicated
             replicas: 1
@@ -13,7 +13,7 @@ services:
       volumes:
             - cockroachdb-1:/cockroach/cockroach-data
     db2:
-      image: cockroachdb/cockroach:v1.0.3
+      image: cockroachdb/cockroach:v1.0.2
       deploy:
          mode: replicated
          replicas: 1
@@ -23,7 +23,7 @@ services:
       volumes:
          - cockroachdb-2:/cockroach/cockroach-data
     db3:
-      image: cockroachdb/cockroach:v1.0.3
+      image: cockroachdb/cockroach:v1.0.2
       deploy:
          mode: replicated
          replicas: 1
