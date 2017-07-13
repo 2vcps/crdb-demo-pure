@@ -1,19 +1,19 @@
 version: '3.1'
 services:
     db1:
-      image: cockroachdb/cockroach:v1.0.2
+      image: cockroachdb/cockroach:v1.0.3
       deploy:
             mode: replicated
             replicas: 1
       ports:
-            - 8080:8080
+            - 8888:8080
       command: start --advertise-host=cockroach_db1 --logtostderr --insecure
       networks:
             - cockroachdb
       volumes:
             - cockroachdb-1:/cockroach/cockroach-data
     db2:
-      image: cockroachdb/cockroach:v1.0.2
+      image: cockroachdb/cockroach:v1.0.3
       deploy:
          mode: replicated
          replicas: 1
@@ -23,7 +23,7 @@ services:
       volumes:
          - cockroachdb-2:/cockroach/cockroach-data
     db3:
-      image: cockroachdb/cockroach:v1.0.2
+      image: cockroachdb/cockroach:v1.0.3
       deploy:
          mode: replicated
          replicas: 1
@@ -37,7 +37,10 @@ services:
       deploy:
          mode: replicated
          replicas: 1
-      networks: cockroachdb
+      ports:
+         - 26257:26257
+      networks: 
+         - cockroachdb
 
 networks:
     cockroachdb:
@@ -49,4 +52,4 @@ volumes:
     cockroachdb-2:
       driver: pure
     cockroachdb-3:
-      driver: pure:
+      driver: pure

@@ -1,0 +1,91 @@
+version: '3.1'
+services:
+    db1:
+      image: cockroachdb/cockroach:v1.0.2
+      deploy:
+            mode: replicated
+            replicas: 1
+      ports:
+            - 8888:8080
+      command: start --advertise-host=cockroach_db1 --logtostderr --insecure
+      networks:
+            - cockroachdb
+      volumes:
+            - cockroachdb-1:/cockroach/cockroach-data
+    db2:
+      image: cockroachdb/cockroach:v1.0.2
+      deploy:
+         mode: replicated
+         replicas: 1
+      command: start --advertise-host=cockroach_db2 --join=cockroach_db1:26257 --logtostderr --insecure
+      networks:
+         - cockroachdb
+      volumes:
+         - cockroachdb-2:/cockroach/cockroach-data
+    db3:
+      image: cockroachdb/cockroach:v1.0.2
+      deploy:
+         mode: replicated
+         replicas: 1
+      command: start --advertise-host=cockroach_db3 --join=cockroach_db1:26257 --logtostderr --insecure
+      networks:
+         - cockroachdb
+      volumes:
+         - cockroachdb-3:/cockroach/cockroach-data
+    crdb-proxy:
+      image: jowings/crdb-haproxy:v2
+      deploy:
+         mode: replicated
+         replicas: 1
+      ports:
+         - 26257:26257
+      networks: 
+         - cockroachdb
+    db4:
+      image: cockroachdb/cockroach:v1.0.2
+      deploy:
+         mode: replicated
+         replicas: 1
+      command: start --advertise-host=cockroach_db4 --join=cockroach_db1:26257 --logtostderr --insecure
+      networks:
+         - cockroachdb
+      volumes:
+         - cockroachdb-4:/cockroach/cockroach-data
+    db5:
+      image: cockroachdb/cockroach:v1.0.2
+      deploy:
+         mode: replicated
+         replicas: 1
+      command: start --advertise-host=cockroach_db5 --join=cockroach_db1:26257 --logtostderr --insecure
+      networks:
+         - cockroachdb
+      volumes:
+         - cockroachdb-5:/cockroach/cockroach-data
+    db6:
+      image: cockroachdb/cockroach:v1.0.2
+      deploy:
+         mode: replicated
+         replicas: 1
+      command: start --advertise-host=cockroach_db6 --join=cockroach_db1:26257 --logtostderr --insecure
+      networks:
+         - cockroachdb
+      volumes:
+         - cockroachdb-6:/cockroach/cockroach-data
+networks:
+    cockroachdb:
+        external: true
+
+volumes:
+    cockroachdb-1:
+      driver: pure
+    cockroachdb-2:
+      driver: pure
+    cockroachdb-3:
+      driver: pure
+    cockroachdb-4:
+      driver: pure
+    cockroachdb-5:
+      driver: pure
+    cockroachdb-6:
+      driver: pure
+
