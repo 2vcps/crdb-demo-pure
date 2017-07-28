@@ -19,9 +19,9 @@ services:
          replicas: 1
       command: start --advertise-host=cockroach_db2 --join=cockroach_db1:26257 --logtostderr --insecure
       networks:
-         - cockroachdb
+            - cockroachdb
       volumes:
-         - cockroachdb-2:/cockroach/cockroach-data
+            - cockroachdb-2:/cockroach/cockroach-data
     db3:
       image: cockroachdb/cockroach:v1.0.2
       deploy:
@@ -29,9 +29,9 @@ services:
          replicas: 1
       command: start --advertise-host=cockroach_db3 --join=cockroach_db1:26257 --logtostderr --insecure
       networks:
-         - cockroachdb
+            - cockroachdb
       volumes:
-         - cockroachdb-3:/cockroach/cockroach-data
+            - cockroachdb-3:/cockroach/cockroach-data
     crdb-proxy:
       image: jowings/crdb-proxy:v1
       deploy:
