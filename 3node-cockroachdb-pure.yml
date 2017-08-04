@@ -46,15 +46,15 @@ volumes:
       driver: pure
       driver_opts:
          size: 100GiB
-    cockroachdb-1:
+    cockroachdb-{{.Task.Slot}}:
       driver: pure
       driver_opts:
          size: 100GiB
-    cockroachdb-2:
+    cockroachdb-{{.Task.Slot}}:
       driver: pure
       driver_opts:
          size: 100GiB
-    cockroachdb-3:
+    cockroachdb-{{.Task.Slot}}:
       driver: pure
       driver_opts:
          size: 100GiB
