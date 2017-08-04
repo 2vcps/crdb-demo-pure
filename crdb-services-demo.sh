@@ -27,7 +27,7 @@ docker service create \
 --name cockroach_db3 \
 --hostname cockroach_db3 \
 --network cockroachdb \
---mount type=volume,source=cockroachdb-3,target=/cockroach/cockroach-data,volume-driver=pure \
+--mount type=volume,source=cockroachdb-3_test,target=/cockroach/cockroach-data,volume-driver=pure \
 --stop-grace-period 60s \
 cockroachdb/cockroach:v1.0.2 start \
 --join=cockroach_db1:26257 \
@@ -39,6 +39,14 @@ docker service create \
 --replicas 1 \
 --name crdb-proxy \
 --hostname crdb-proxy \
+--mount type=bind,source=/home/sedemo/haproxy,target=/usr/local/etc/haproxy:ro \
 --network cockroachdb \
 --publish 26257:26257 \
-jowings/crdb-proxy:v1
+jowings/crdb-proxy:v4
+
+
+
+docker service create \
+ --replicas 12 \
+ --name gogogo \
+ jowings/go_client:v2 go run /go/src/insert_rand.go

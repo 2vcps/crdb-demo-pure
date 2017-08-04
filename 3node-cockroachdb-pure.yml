@@ -1,37 +1,17 @@
 version: '3.1'
 services:
-    db1:
+    db{{.Task.Slot}}:
       image: cockroachdb/cockroach:v1.0.2
       deploy:
             mode: replicated
-            replicas: 1
+            replicas: 3
       ports:
             - 8888:8080
       command: start --advertise-host=cockroach_db1 --logtostderr --insecure
       networks:
             - cockroachdb
       volumes:
-            - cockroachdb-1:/cockroach/cockroach-data
-    db2:
-      image: cockroachdb/cockroach:v1.0.2
-      deploy:
-         mode: replicated
-         replicas: 1
-      command: start --advertise-host=cockroach_db2 --join=cockroach_db1:26257 --logtostderr --insecure
-      networks:
-            - cockroachdb
-      volumes:
-            - cockroachdb-2:/cockroach/cockroach-data
-    db3:
-      image: cockroachdb/cockroach:v1.0.2
-      deploy:
-         mode: replicated
-         replicas: 1
-      command: start --advertise-host=cockroach_db3 --join=cockroach_db1:26257 --logtostderr --insecure
-      networks:
-            - cockroachdb
-      volumes:
-            - cockroachdb-3:/cockroach/cockroach-data
+            - cockroach-db{{.Task.Slot}}:/cockroach/cockroach-data
     crdb-proxy:
       image: jowings/crdb-proxy:v1
       deploy:
@@ -39,7 +19,7 @@ services:
          replicas: 1
       ports:
          - 26257:26257
-      networks: 
+      networks:
          - cockroachdb
 
 networks:
@@ -50,7 +30,7 @@ volumes:
     cockroachdb-1:
       driver: pure
       driver_opts:
-         size: 100GiB 
+         size: 100GiB
     cockroachdb-2:
       driver: pure
       driver_opts:
